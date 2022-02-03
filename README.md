@@ -1,2 +1,2 @@
-# students-organiser
+# Students organiser
 Application, which helps student to organize his time better

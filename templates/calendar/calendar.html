@@ -1,0 +1,71 @@
+{% include 'calendar/base.html' %}
+
+{% block content %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <script type="text/javascript" charset="utf-8">
+    let a;
+    let time;
+    setInterval(() => {
+      a = new Date();
+      time = a.getHours() + ':' + a.getMinutes() + ':' + a.getSeconds();
+      document.getElementById('time').innerHTML = time;
+    }, 1000);
+  </script>
+
+          <h2>Schedule - <span id="time"></span></h2>
+          <div class="table-responsive">
+            <table class="table table-bordered table-responsive-sm" id="calendar">
+                <thead>
+                <tr class="schedule">
+                    <th >Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                </tr>
+                <tr class="schedule">
+                    <td>
+                        {% for lesson in lessons %}
+                            {% if lesson.day == 'Mon' %}
+                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for lesson in lessons %}
+                            {% if lesson.day == 'Tue' %}
+                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for lesson in lessons %}
+                            {% if lesson.day == 'Wed' %}
+                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for lesson in lessons %}
+                            {% if lesson.day == 'Thu' %}
+                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for lesson in lessons %}
+                            {% if lesson.day == 'Fri' %}
+                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                </thead>
+
+                <tbody id="calendar-body">
+
+                </tbody>
+            </table>
+          </div>
+    </main>
+{% endblock %}

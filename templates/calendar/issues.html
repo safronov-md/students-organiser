@@ -1,0 +1,20 @@
+{% include 'calendar/base.html' %}
+{% block content %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <h2>Issues</h2>
+        <h3><a title="Add Issue" href="#"><ion-icon name="add-circle-outline"></ion-icon></a></h3>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th style="text-align: center">Lesson</th>
+                  <th>Status {{ issues }}</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+          </div>
+        </main>
+{% endblock %}

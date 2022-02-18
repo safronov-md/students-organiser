@@ -1,71 +1,113 @@
-{% include 'calendar/base.html' %}
+{% extends 'calendar/base.html' %}
 
 {% block content %}
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-    <script type="text/javascript" charset="utf-8">
-    let a;
-    let time;
-    setInterval(() => {
-      a = new Date();
-      time = a.getHours() + ':' + a.getMinutes() + ':' + a.getSeconds();
-      document.getElementById('time').innerHTML = time;
-    }, 1000);
-  </script>
+                <script>
+                window.onload = function (){
+                    setActive('calendar');
+                }
+                </script>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-          <h2>Schedule - <span id="time"></span></h2>
-          <div class="table-responsive">
-            <table class="table table-bordered table-responsive-sm" id="calendar">
-                <thead>
-                <tr class="schedule">
-                    <th >Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                </tr>
-                <tr class="schedule">
-                    <td>
-                        {% for lesson in lessons %}
-                            {% if lesson.day == 'Mon' %}
-                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for lesson in lessons %}
-                            {% if lesson.day == 'Tue' %}
-                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for lesson in lessons %}
-                            {% if lesson.day == 'Wed' %}
-                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for lesson in lessons %}
-                            {% if lesson.day == 'Thu' %}
-                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for lesson in lessons %}
-                            {% if lesson.day == 'Fri' %}
-                                <a class="schedule" href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a><hr>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                </tr>
-                </thead>
+                    <!-- DataTales Example -->
+                    <form action="{% url 'edit_schedule' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Schedule</h6>
+                            <a href="#" id="editButton" onclick="editSchedule();">Edit</a>
+                            <input style="padding: 1px;" class="meet_link btn btn-success btn-icon-split"
+                                   hidden type="submit" href="#" value="Save" id="editButton">
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Monday</th>
+                                            <th>Tuesday</th>
+                                            <th>Wednesday</th>
+                                            <th>Thursday</th>
+                                            <th>Friday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            {% for lesson in lessons %}
+                                                {% if lesson.day == 'Mon' %}
 
-                <tbody id="calendar-body">
+                                                    <a href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a>
+                                                    <br>
+                                                    <input name="{{ lesson.title.id }}" class="meet_link" hidden placeholder="Meeting Link"
+                                                           type="text" value="{{ lesson.title.meet_link }}">
+                                                    <hr>
 
-                </tbody>
-            </table>
-          </div>
-    </main>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </td>
+                                        <td>
+                                            {% for lesson in lessons %}
+                                                {% if lesson.day == 'Tue' %}
+
+                                                    <a href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a>
+                                                    <br>
+                                                    <input name="{{ lesson.title.id }}" class="meet_link" hidden placeholder="Meeting Link"
+                                                           type="text" value="{{ lesson.title.meet_link }}">
+                                                    <hr>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                            </td>
+                                        <td>
+                                            {% for lesson in lessons %}
+                                                {% if lesson.day == 'Wed' %}
+
+                                                    <a href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a>
+                                                    <br>
+                                                    <input name="{{ lesson.title.id }}" class="meet_link" hidden placeholder="Meeting Link"
+                                                           type="text" value="{{ lesson.title.meet_link }}">
+                                                    <hr>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                            </td>
+                                        <td>
+                                            {% for lesson in lessons %}
+                                                {% if lesson.day == 'Thu' %}
+
+                                                    <a href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a>
+                                                    <br>
+                                                    <input name="{{ lesson.title.id }}" class="meet_link" hidden placeholder="Meeting Link"
+                                                           type="text" value="{{ lesson.title.meet_link }}">
+                                                    <hr>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                            </td>
+                                        <td>
+                                            {% for lesson in lessons %}
+                                                {% if lesson.day == 'Fri' %}
+
+                                                    <a href="{{ lesson.title.meet_link }}">{{ lesson.title }}<br>{{ lesson.time }}</a>
+                                                    <br>
+                                                    <input name="{{ lesson.title.id }}" class="meet_link" hidden placeholder="Meeting Link"
+                                                           type="text" value="{{ lesson.title.meet_link }}">
+                                                    <hr>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+                <!-- /.container-fluid -->
+
+
 {% endblock %}

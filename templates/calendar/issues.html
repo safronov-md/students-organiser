@@ -1,20 +1,56 @@
-{% include 'calendar/base.html' %}
+{% extends 'calendar/base.html' %}
 {% block content %}
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <h2>Issues</h2>
-        <h3><a title="Add Issue" href="#"><ion-icon name="add-circle-outline"></ion-icon></a></h3>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th style="text-align: center">Lesson</th>
-                  <th>Status {{ issues }}</th>
-                </tr>
-              </thead>
-              <tbody>
+    <script>
+        window.onload = function (){
+        setActive('issues');
+        }
+    </script>
+        <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-              </tbody>
-            </table>
-          </div>
-        </main>
+                    <!-- DataTales Example -->
+                    <form action="{% url 'edit_schedule' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Issues</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Lesson</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for data in issueData %}
+
+                                        <tr>
+                                            <td>
+                                                {% for lesson in lessons %}
+                                                    {% if lesson.id == data%}
+                                                        [{{ lesson.type }}] {{ lesson.title }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for issue in issueData.items %}
+                                                    {% if issue.0 == data %}
+                                                        Done: {{ issue.1.Done }}<br>Less {{ issue.1.New }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+                <!-- /.container-fluid -->
 {% endblock %}

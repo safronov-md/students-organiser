@@ -1,5 +1,5 @@
-function tagAsInput() {
-    let element = document.getElementById("add_file");
+function tagAsInput(element_id) {
+    let element = document.getElementById(element_id);
     element.click()
 }
 

@@ -56,8 +56,14 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="btn btn-success inf" type="button" value="Upload">
-                                            <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.answerFile }}">Open</a>
+                                            <form action="{% url 'upload_issue_answer' %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                                <input class="btn btn-success inf"  onclick="tagAsInput('up-a_{{ issue.id }}');" type="button" value="Upload">
+                                                <input hidden name="id" value="doc_{{ issue.id }}">
+                                                <input hidden name="type" value="answer">
+                                                <input name="doc_{{ issue.id }}" id="up-a_{{ issue.id }}" onchange="this.form.submit();" type="file" hidden>
+                                                <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.answerFile }}">Open</a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -73,8 +79,14 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="btn btn-success inf" type="button" value="Upload">
-                                            <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.issueDoc }}">Open</a>
+                                            <form action="{% url 'upload_issue_answer' %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                                <input class="btn btn-success inf"  onclick="tagAsInput('up-i_{{ issue.id }}');" type="button" value="Upload">
+                                                <input hidden name="id" value="doc_{{ issue.id }}">
+                                                <input hidden name="type" value="issue">
+                                                <input name="doc_{{ issue.id }}" id="up-i_{{ issue.id }}" onchange="this.form.submit();" type="file" hidden>
+                                                <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.issueDoc }}">Open</a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

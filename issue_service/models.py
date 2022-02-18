@@ -14,5 +14,5 @@ class Issue(models.Model):
     end_date = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
-        return self.title
+        return f'{self.lesson} - {self.title}'
 

@@ -1,0 +1,89 @@
+{% extends 'calendar/base.html' %}
+{% load fullurl %}
+{% block content %}
+    <script>
+        window.onload = function (){
+        setActive('issues');
+        }
+    </script>
+        <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                     <div class="row">
+                         {% for issue in issues %}
+                             <div class="col-lg-6">
+                                <!-- DataTales Example -->
+                                <form action="{% url 'edit_schedule' %}" method="post">
+                                {% csrf_token %}
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <a href="{% url 'remove_issue' %}?id={{ issue.id }}"><h5 style="text-align: right" class="m-0 font-weight-bold text-primary">×</h5></a>
+                                        <h6 class="m-0 font-weight-bold text-primary">{{ issue.title }}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <h5>Description</h5><a id="desc_{{ issue.id }}a" href="#" onclick="editDescription('desc_{{ issue.id }}','{% fullurl 'change_issue' %}');">Edit</a>
+                                            <p id="desc_{{ issue.id }}">{{ issue.issue }}</p>
+                                            <textarea id="desc_{{ issue.id }}h" class="container-fluid" hidden>{{ issue.issue }}</textarea>
+                                            <h5>Issue Documents</h5>
+                                            <p>
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#issueModal{{ issue.id }}">Issue</a>
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#answerModal{{ issue.id }}">Answer</a>
+                                            </p>
+                                            <h5>Status</h5>
+                                            <p>
+                                            <label for="status">Done</label>
+                                                {% if issue.status %}
+                                                    <input onchange="changeStatus(event, '{% fullurl 'change_issue' %}' );" id="status_{{ issue.id }}" name="status" type="checkbox" checked>
+                                                {% else %}
+                                                    <input onchange="changeStatus(event, '{% fullurl 'change_issue' %}' );" id="status_{{ issue.id }}" name="status" type="checkbox">
+                                                {% endif %}
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                             </div>
+                             <!-- Logout Modal-->
+                            <div class="modal fade" id="answerModal{{ issue.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Choose an option</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="btn btn-success inf" type="button" value="Upload">
+                                            <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.answerFile }}">Open</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="issueModal{{ issue.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Choose an option</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="btn btn-success inf" type="button" value="Upload">
+                                            <a target="_blank" type="submit" class="btn btn-info inf" href="{% fullurl 'calendar' %}{{ issue.issueDoc }}">Open</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+{% endblock %}

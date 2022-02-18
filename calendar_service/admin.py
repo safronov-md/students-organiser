@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Schedule, Issue, Lesson
+from .models import Schedule, Lesson
 
 
-@admin.register(Schedule, Issue, Lesson)
+@admin.register(Schedule, Lesson)
 class Calendar(admin.ModelAdmin):
     pass

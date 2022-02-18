@@ -41,14 +41,3 @@ class Schedule(models.Model):
 
     def __str__(self):
         return f'{self.day} - {self.title}'
-
-
-class Issue(models.Model):
-    lesson = models.ForeignKey(to=Lesson, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, default=None)
-    title = models.CharField(max_length=70, default='Issue')
-    issue = models.TextField(default="Issue description")
-    status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.title

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'auth_service',
     'store_service',
     'fullurl',
+    'issue_service',
 ]
 
 MIDDLEWARE = [

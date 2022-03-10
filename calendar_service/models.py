@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from auth_service.models import Teams
 
 
 class Lesson(models.Model):
@@ -35,6 +36,7 @@ class Schedule(models.Model):
     )
 
     day = models.CharField(max_length=3, null=False, choices=DAYS)
+    group_id = models.ForeignKey(to=Teams, on_delete=models.CASCADE, null=True)
     order = models.IntegerField(null=False, default=0)
     time = models.CharField(max_length=25, null=False, choices=TIME, default='UnTimed')
     title = models.ForeignKey(Lesson, on_delete=models.CASCADE)

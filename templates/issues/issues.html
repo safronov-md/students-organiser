@@ -13,8 +13,8 @@
                     {% csrf_token %}
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Issues</h6>
-                            <a href="" data-toggle="modal" data-target="#logoutModal">Add</a>
+                            <h6 class="m-0 font-weight-bold text-primary">Tasks</h6>
+                            <a style="float: right" class="btn btn-success btn-icon-split" href="" data-toggle="modal" data-target="#logoutModal"><span class="text">Add</span></a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -61,7 +61,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add an issue</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add new task</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -85,6 +85,9 @@
                         <label>
                         Document <input name="doc" type="file"><br>
                     </label>
+                    <label>
+                    DeadLine <input type="datetime-local" name="deadline"><br>
+                  </label>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

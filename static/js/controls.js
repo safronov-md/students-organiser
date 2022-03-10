@@ -12,30 +12,62 @@ function setActive(page){
     menuEl.classList.add('active');
 }
 
-function editDescription(d_id,link){
-    let desc = document.getElementById(d_id+'h');
+function editIssue(id){
+    let desc = document.getElementById('desc_'+id+'_edit'); // TextArea of description
     desc.removeAttribute('hidden');
-    document.getElementById(d_id).setAttribute('hidden', 'true');
-    document.getElementById(d_id+'a').innerHTML = 'Save';
-    document.getElementById(d_id+'a').setAttribute('onclick', "closeEditDesc('"+d_id+"','"+link+"');");
+    document.getElementById('desc_'+id+'_text').setAttribute('hidden', 'true'); // Text of description
+    document.getElementById('form_'+id+'_edit').setAttribute('hidden', 'true')
+    document.getElementById('form_'+id+'_save').removeAttribute('hidden');
+    document.getElementById('date_'+id+'_text').setAttribute('hidden', 'true')
+    document.getElementById('date_'+id+'_edit').removeAttribute('hidden');
 }
-function closeEditDesc(d_id, link){
-    let desc = document.getElementById(d_id+'h');
-    desc.setAttribute('hidden', 'true');
-    document.getElementById(d_id).removeAttribute('hidden');
-    document.getElementById(d_id).innerHTML=desc.value;
-    document.getElementById(d_id+'a').setAttribute('onclick', "editDescription('"+d_id+"','"+link+"');");
-    document.getElementById(d_id+'a').innerHTML='Edit';
-    link+='?id='+d_id+'&desc='+desc.value;
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", link);
 
-    xhr.setRequestHeader("Accept", "*/*");
-    xhr.send();
+var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+function saveIssue(i_id, link){
+    let desc = document.getElementById('desc_'+i_id+'_edit'); // TextArea of description
+    desc.setAttribute('hidden', 'true');
+    document.getElementById('desc_'+i_id+'_text').removeAttribute('hidden');
+    document.getElementById('desc_'+i_id+'_text').innerHTML=desc.value;
+    document.getElementById('form_'+i_id+'_save').setAttribute('hidden', 'true');
+    document.getElementById('form_'+i_id+'_edit').removeAttribute('hidden');
+    document.getElementById('date_'+i_id+'_edit').setAttribute('hidden', 'true');
+    document.getElementById('date_'+i_id+'_text').removeAttribute('hidden');
+    let request = new XMLHttpRequest();
+    request.open('POST', link, true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('X-CSRFToken', csrfcookie());
+    request.send(JSON.stringify({
+        id: i_id,
+        desc: desc.value,
+        deadline: document.getElementById('date_'+i_id+'_edit').value
+    }));
+    request.onreadystatechange = function () {
+        try {
+            let data = JSON.parse(request.responseText);
+            document.getElementById('date_' + i_id + '_text').innerHTML = data['date'];
+        }catch{
+            document.getElementById('date_' + i_id + '_text').innerHTML = 'None'
+        }
+    }
 }
 
 function changeStatus(event, link){
-    link+='?id='+event.target.id+'&status='+event.target.checked;
+    status_id = event.target.id.replace('status_','');
+    link+='?id='+status_id+'&status='+event.target.checked;
     const xhr = new XMLHttpRequest();
     xhr.open("GET", link);
 
@@ -49,7 +81,7 @@ function editSchedule(){
     }
     let editButton = document.getElementById('editButton');
     editButton.setAttribute('onclick', 'closeEdit();');
-    editButton.innerHTML = 'Close';
+    editButton.innerHTML = "<span class='text'>Close</span>";
 }
 
 function closeEdit(){
@@ -59,7 +91,7 @@ function closeEdit(){
     }
     let closeButton = document.getElementById('editButton');
     closeButton.setAttribute('onclick', 'editSchedule();');
-    closeButton.innerHTML = 'Edit';
+    closeButton.innerHTML = "<span class='text'>Edit</span>";
 }
 
 

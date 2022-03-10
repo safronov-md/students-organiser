@@ -1,14 +1,17 @@
+import json
 import os
 from django.http import JsonResponse
 from django.db import connection
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from issue_service.models import Issue
 from calendar_service.models import Lesson
+from datetime import datetime
 
 
-def upload_file(user_id,file):
+def upload_file(user_id, file):
     dist = ''.join([f'static/files/{user_id}/', file.name])
-    if not os.path.exists(f'static/files/{user_id}/'): os.makedirs(f'static/files/{user_id}/')
+    if not os.path.exists(f'static/files/{user_id}/'):
+        os.makedirs(f'static/files/{user_id}/')
     with open(dist, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
@@ -17,11 +20,16 @@ def upload_file(user_id,file):
 
 def add_issue(request) -> None:
     data = request.POST
+    deadline = None
+    if data.get('deadline'):
+        deadline = datetime.strptime(data['deadline'], '%Y-%m-%dT%H:%M')
     dist: str = ''
     if request.FILES.get('doc'):
         dist = upload_file(request.user.id, request.FILES.get('doc'))
-    file = Issue(lesson=Lesson.objects.get(id=data.get('lesson')), user=request.user, title=data.get('title'),
-                 issue=data.get('desc'), issueDoc=dist)
+    file = Issue(lesson=Lesson.objects.get(id=data.get('lesson')),
+                 user=request.user, title=data.get('title'),
+                 issue=data.get('desc'), issueDoc=dist,
+                 end_date=deadline)
     file.save()  # Добавялем информацию по файлу в базу данных
 
     return redirect('issues')
@@ -55,15 +63,19 @@ def remove_issue(request):
 
 
 def change_issue(request):
-    data = request.GET
-    issue_id = data.get('id').split('_')[1]
+    data = request.GET if request.method == 'GET' else json.loads(request.body)
+    deadline = datetime.strptime(data['deadline'], '%Y-%m-%dT%H:%M') if data.get('deadline') else None
+    issue_id = data.get('id')
     issue = Issue.objects.get(id=issue_id)
     if data.get('status', False):
         issue.status = True if data.get('status') == 'true' else False
-    elif data.get('desc', False):
+    if 'desc' in data.keys():
         issue.issue = data.get('desc')
+        issue.end_date = deadline
     issue.save()
-    return JsonResponse({'_status': 'OK'})
+    deadline = issue.end_date.strftime("%b. %d, %Y, %I:%M %p") if deadline else None
+    return JsonResponse({'_status': 'OK',
+                         'date': deadline})
 
 
 def issues(request):

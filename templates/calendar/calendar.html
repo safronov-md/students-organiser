@@ -15,9 +15,9 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Schedule</h6>
-                            <a href="#" id="editButton" onclick="editSchedule();">Edit</a>
-                            <input style="padding: 1px;" class="meet_link btn btn-success btn-icon-split"
-                                   hidden type="submit" href="#" value="Save" id="editButton">
+                            <a style="float: right" href="#" class="btn btn-info btn-icon-split" id="editButton" onclick="editSchedule();"><span class="text">Edit</span></a>
+                            <a style="float: right" class="meet_link btn btn-success btn-icon-split"
+                               hidden href="javascript:$('form').submit()"><span class='text'>Save</span></a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

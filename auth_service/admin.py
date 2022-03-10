@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Teams, ExtendedUser
 
-# Register your models here.
+
+@admin.register(Teams, ExtendedUser)
+class Calendar(admin.ModelAdmin):
+    pass

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Create the task</h1>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">General Information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                            id="taskTitle" name="taskTitle" aria-describedby="titleHelp"
+                                            placeholder="Enter title of the task">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea type="text" class="form-control form-control-user"
+                                            id="taskSmallDescription" name="taskSmallDescription" aria-describedby="titleHelp"
+                                            placeholder="Enter Small Description"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="categoryDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Choose category
+                                        </button>
+                                        <div class="dropdown-menu animated--fade-in" aria-labelledby="categoryDrop">
+                                            <a class="dropdown-item" href="#">Web</a>
+                                            <a class="dropdown-item" href="#">ASDC</a>
+                                            <a class="dropdown-item" href="#">Kek</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="categoryDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Assignee
+                                        </button>
+                                        <div class="dropdown-menu animated--fade-in" aria-labelledby="categoryDrop">
+                                            <a class="dropdown-item" href="#">Me</a>
+                                            <a class="dropdown-item" href="#">My Group</a>
+                                            <a class="dropdown-item" href="#">Alexei Safronov</a>
+                                            <a class="dropdown-item" href="#">Ion Cucieru</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endDate"> End Date: </label><br>
+                                        <input type="datetime-local" class="form-control form-control-user"
+                                            id="endDate" name="endDate" aria-describedby="titleHelp"
+                                            placeholder="Enter title of the event">
+                                </div>
+                                </div>
+
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Body</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <textarea id="postEditor"></textarea>
+                                    </div>
+                                    <a href="index.html" class="btn btn-primary btn-user">
+                                        Attach File
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Choose method of answer uploading</h6>
+                                </div>
+                                <div class="card-body">
+                                    <input type="radio" id="github" name="answerUploadingMethod" value="github">
+                                    <label for="github">GitHub</label><br>
+                                    <input type="radio" id="server" name="answerUploadingMethod" value="server">
+                                    <label for="server">Server</label>
+                                </div>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Publish</h6>
+                                </div>
+                                <div class="card-body">
+                                    <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        Submit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}

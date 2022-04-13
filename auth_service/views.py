@@ -1,38 +1,35 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, authenticate, login as login2, logout as logout2
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.hashers import make_password
 
 
-def login(request):
-    return render(request, 'auth/login.html')
+def login_view(request):
+    return render(request, 'login.html')
 
 
-def logout(request):
+def sign_out(request):
     if request.user.is_authenticated:
-        logout2(request)
-        return redirect('login')
-    else:
-        return redirect('calendar')
+        logout(request)
+    return redirect('login_view')
 
 
-def auth(request):
+def sign_in(request):
     data = request.POST
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
     User = get_user_model()
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(email=email)
     except User.DoesNotExist:
-        return redirect('login')
+        return redirect('login_view')
     else:
         if user.check_password(password):
-            user = authenticate(username=username, password=password)
-            login2(request=request, user=user)
-            return redirect('calendar')
-    return redirect('login')
+            login(request=request, user=user)
+            return redirect('dashboard_view')
+    return redirect('login_view')
 
 
-def signup(request):
+def sign_up(request):
     data = request.POST
     pwd: str = str()
     if data.get('pwd') == data.get('pwd2'):
@@ -55,5 +52,5 @@ def signup(request):
     return redirect('login')
 
 
-def register(request):
-    return render(request, 'auth/register.html')
+def sign_up_view(request):
+    return render(request, 'register.html')

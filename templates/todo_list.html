@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">TODO List</h1>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Filter</h6>
+                                </div>
+                                <div class="card-body">
+                                    <label class="font-weight-bold text-dark mb-1">Type:</label><br>
+                                    <input name="task_filter" id="task_filter" type="checkbox">
+                                    <label for="task_filter">Task</label><br>
+                                    <input name="event_filter" id="event_filter" type="checkbox">
+                                    <label for="event_filter">Event</label><br><hr>
+                                    <label class="font-weight-bold text-dark mb-1">Status:</label><br>
+                                    <input name="done_filter" id="done_filter" type="checkbox">
+                                    <label for="done_filter">Done</label><br>
+                                    <input name="status" id="pending_filter" type="checkbox">
+                                    <label for="pending_filter">Pending</label><br><hr>
+                                    <label class="font-weight-bold text-dark mb-1">Category:</label><br>
+                                    <input name="category" id="cnmo_filter" type="checkbox">
+                                    <label for="cnmo_filter">CNMO</label><br>
+                                    <input name="category" id="ai_filter" type="checkbox">
+                                    <label for="ai_filter">AI</label><br>
+                                    <input name="category" id="asdc_filter" type="checkbox">
+                                    <label for="asdc_filter">ASDC</label><br>
+                                    <input name="category" id="java_filter" type="checkbox">
+                                    <label for="java_filter">Java</label><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary ">List</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class=" list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <div class="todo-indicator bg-danger"></div>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-2">
+                                                        <div class="custom-checkbox custom-control">
+                                                             <input class="custom-control-input" id="exampleCustomCheckbox12" type="checkbox">
+                                                             <label class="custom-control-label" for="exampleCustomCheckbox12">&nbsp;</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-content-left">
+                                                        <div class="widget-heading"><a href="{% url 'task_view' %}">Design App</a>
+                                                            <div class="badge badge-info ml-2">Java</div>
+                                                        </div>
+                                                        <div class="widget-subheading"><i>Create and Java/Android Application using java FX</i></div>
+                                                    </div>
+                                                    <div class="widget-content-right font-weight-bold text-dark text-uppercase mb-1">
+                                                        <button class="border-0 btn-transition btn btn-outline-success">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                        <button class="border-0 btn-transition btn btn-outline-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button><span class="padding-5px-tb padding-15px-lr margin-10px-bottom">09.10.2022 19:30</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="todo-indicator bg-sky"></div>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-2">
+                                                        <div class="custom-checkbox custom-control">
+                                                             <input class="custom-control-input" id="exampleCustomCheckbox12" type="checkbox">
+                                                             <label class="custom-control-label" for="exampleCustomCheckbox12">&nbsp;</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-content-left">
+                                                        <div class="widget-heading text-dark">CNMO Exam
+                                                            <div class="badge badge-info ml-2">Event</div>
+                                                        </div>
+                                                        <div class="widget-subheading"><i>Create and Java/Android Application using java FX</i></div>
+                                                    </div>
+                                                    <div class="widget-content-right font-weight-bold text-dark text-uppercase mb-1">
+                                                        <button class="border-0 btn-transition btn btn-outline-success">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                        <button class="border-0 btn-transition btn btn-outline-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button><span class="padding-5px-tb padding-15px-lr margin-10px-bottom">09.10.2022 19:30</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Add Task/Event</h6>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{% url 'create_task_view' %}" class="btn btn-primary btn-user btn-block">
+                                        New Task
+                                    </a>
+                                    <button data-toggle="modal" data-target="#createEvent" class="btn btn-primary btn-user btn-block">
+                                        New Event
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="createEvent" tabindex="-1" role="dialog" aria-labelledby="createEvent" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="createEventTitle">New Event</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                            id="eventTitle" name="eventTitle" aria-describedby="titleHelp"
+                                            placeholder="Enter title of the event">
+                                    </div>
+                              <div class="form-group">
+                                  <input type="datetime-local" class="form-control form-control-user"
+                                            id="eventTitle" name="eventTitle" aria-describedby="titleHelp"
+                                            placeholder="Enter title of the event">
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Create</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+{% endblock %}

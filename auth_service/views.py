@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.hashers import make_password
+from .models import Group
 
 
 def login_view(request):
@@ -54,3 +55,10 @@ def sign_up(request):
 
 def sign_up_view(request):
     return render(request, 'register.html')
+
+
+def profile_view(request):
+    context = {
+        'group_id' : Group.objects.filter(id=request.user.group_id).first().tag
+    }
+    return render(request, 'profile.html', context=context)
